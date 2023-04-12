@@ -136,3 +136,8 @@ def handle_dns_request():
         return jsonify({'success': True}), 200
     else:
         return jsonify({'error': 'Failed to add DNS record'}), 400
+    
+ @app.route('/')
+def index():
+    return 'Hello, Handshake 🤝!'
+   

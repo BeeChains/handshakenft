@@ -77,4 +77,28 @@ That's it! You should now be able to use the Handshake command-line interface (C
 
 Note that running Handshake on Windows may require administrative privileges or elevated command prompt access depending on your system configuration.
 
+# Example of how you can create a simple web page using Flask and Python to register Handshake NFT subdomains:
+
+## Installation
+
+1. Install Python 3.9 or above: https://www.python.org/downloads/
+2. Install Flask using the command ```pip install Flask```
+3. Clone the repository: ```git clone https://github.com/BeeChains/handshakenft```
+
+## Deployment
+
+1. Create a HandshakeNFT subdomain on Namebase: https://www.namebase.io/domains
+2. Create a TXT record for the subdomain with the metadata URL. If you're using Namebase, go to the DNS section for your subdomain and add a TXT record with the    following value: "txt=handshakenft/"
+3. Replace the TODO placeholders in the app.py file with your own code.
+4 Start the server by running the command python app.py
+5.Access the application by opening a web browser and navigating to http://localhost:5000.
+
+## Frontend Code
+Using Flask for a frontend that allows users to buy and sell NFTs:
+```
+## Backend
+python
+
+
+
 

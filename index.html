@@ -1,37 +1,34 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Handshake NFT Metadata Demo</title>
-  </head>
-  <body>
-    <h1>Handshake NFT Metadata Demo</h1>
-    <p>Enter the Handshake NFT ID below:</p>
-    <input id="nft-id" type="text">
-    <button onclick="fetchMetadata()">Fetch Metadata</button>
-    <div id="metadata"></div>
-    <script>
-      async function fetchMetadata() {
-        const nftId = document.getElementById('nft-id').value;
-        const metadataUrl = `https://api.namebase.io/v0/hns/${nftId}/metadata`;
-        try {
-          const response = await fetch(metadataUrl);
-          const metadata = await response.json();
-          const metadataHtml = `
-            <p><strong>Name:</strong> ${metadata.name}</p>
-            <p><strong>Description:</strong> ${metadata.description}</p>
-            <p><strong>Image:</strong> <img src="${metadata.image}" alt="NFT Image"></p>
-            <p><strong>Attributes:</strong></p>
-            <ul>
-              ${metadata.attributes.map(attr => `<li>${attr.trait_type}: ${attr.value}</li>`).join('')}
-            </ul>
-          `;
-          document.getElementById('metadata').innerHTML = metadataHtml;
-        } catch (error) {
-          console.error(error);
-          document.getElementById('metadata').innerHTML = '<p>Failed to fetch metadata.</p>';
-        }
+<head>
+  <title>Handshake NFT Metadata Lookup</title>
+</head>
+<body>
+  <form>
+    <label for="nftId">Enter Handshake NFT ID:</label>
+    <input type="text" id="nftId" name="nftId">
+    <button type="button" onclick="fetchMetadata()">Search</button>
+  </form>
+  <div id="metadata"></div>
+
+  <script type="text/javascript">
+    const HSClient = require('hs-client-js');
+    const client = new HSClient({ network: 'main' });
+
+    async function fetchMetadata() {
+      const nftId = document.getElementById('nftId').value;
+      const domainName = `${nftId}.nft`;
+      const txtRecords = await client.fetchTXT(domainName);
+      const metadataRecord = txtRecords.find(record => record.name === 'handshakenft');
+      if (metadataRecord) {
+        const metadataUrl = metadataRecord.txt[0];
+        const metadata = await fetch(metadataUrl).then(res => res.json());
+        const metadataDiv = document.getElementById('metadata');
+        metadataDiv.innerHTML = JSON.stringify(metadata, null, 2);
+      } else {
+        alert('No metadata found for NFT');
       }
-    </script>
-  </body>
+    }
+  </script>
+</body>
 </html>

@@ -17,7 +17,7 @@
 
     async function fetchMetadata() {
       const nftId = document.getElementById('nftId').value;
-      const domainName = `${nftId}.nft`;
+      const domainName = `${nftId}.handshakenft`;
       const txtRecords = await client.fetchTXT(domainName);
       const metadataRecord = txtRecords.find(record => record.name === 'handshakenft');
       if (metadataRecord) {

@@ -1,95 +1,36 @@
-<!DOCTYPE html>
 <html>
 <head>
     <title>Handshake NFT Trading App</title>
 </head>
 <body>
     <h1>Handshake NFT Trading App</h1>
-
-    <div id="buy-form">
-        <h2>Buy NFT</h2>
-        <form>
-            <label for="nft-id">NFT ID:</label>
-            <input type="text" id="nft-id" name="nft-id"><br><br>
-
-            <label for="price">Price:</label>
-            <input type="text" id="price" name="price"><br><br>
-
-            <button type="button" onclick="buyNFT()">Buy</button>
-        </form>
-    </div>
-
-    <div id="sell-form">
-        <h2>Sell NFT</h2>
-        <form>
-            <label for="nft-id">NFT ID:</label>
-            <input type="text" id="nft-id" name="nft-id"><br><br>
-
-            <label for="price">Price:</label>
-            <input type="text" id="price" name="price"><br><br>
-
-            <button type="button" onclick="sellNFT()">Sell</button>
-        </form>
-    </div>
-
-    <div id="buy-sell-log">
-        <h2>Buy/Sell Log</h2>
-        <ul id="log"></ul>
-    </div>
-
-    <script>
-        function buyNFT() {
-            const nftId = document.getElementById("nft-id").value;
-            const price = document.getElementById("price").value;
-
-            const metadataUrl = `https://${nftId}.handshakenft`;
-
-            fetch(metadataUrl)
-                .then(response => response.json())
-                .then(data => {
-                    const sellerAddress = data.address;
-                    const buyerAddress = prompt("Please enter your Handshake address to complete the transaction:");
-
-                    const tx = `Transaction: Bought NFT ${nftId} from ${sellerAddress} for ${price} HNS. Buyer address: ${buyerAddress}.`;
-
-                    const log = document.getElementById("log");
-                    const txNode = document.createElement("li");
-                    txNode.appendChild(document.createTextNode(tx));
-                    log.appendChild(txNode);
-                })
-                .catch(error => {
-                    console.error(error);
-                    alert("Failed to buy NFT.");
-                });
-        }
-
-        function sellNFT() {
-            const nftId = document.getElementById("nft-id").value;
-            const price = document.getElementById("price").value;
-
-            const metadataUrl = `https://${nftId}.handshakenft`;
-
-            fetch(metadataUrl)
-                .then(response => response.json())
-                .then(data => {
-                    const sellerAddress = prompt("Please enter your Handshake address to complete the transaction:");
-                    const buyerAddress = data.address;
-                    const txtRecord = `txt=handshakenft/sell:${nftId}`;
-
-                    const tx = `Transaction: Sold NFT ${nftId} to ${buyerAddress} for ${price} HNS. Seller address: ${sellerAddress}.`;
-
-                    const log = document.getElementById("log");
-                    const txNode = document.createElement("li");
-                    txNode.appendChild(document.createTextNode(tx));
-                    log.appendChild(txNode);
-
-                    alert("Please add the following TXT record to your Handshake name:\n\n" + txtRecord);
-                })
-                .catch(error => {
-                    console.error(error);
-                    alert("Failed to sell NFT.");
-                });
-        }
-    </script>
+    <form method="POST" action="/">
+        <label for="nft_id">NFT ID:</label>
+        <input type="text" id="nft_id" name="nft_id" required>
+        <br>
+        <label for="action">Action:</label>
+        <select id="action" name="action" required>
+            <option value="buy">Buy</option>
+            <option value="sell">Sell</option>
+            <option value="transfer">Transfer</option>
+            <option value="sign">Sign</option>
+            <option value="add">Add</option>
+            <option value="update_dns">Update DNS</option>
+        </select>
+        <br>
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" step="0.01" required>
+        <br>
+        <label for="recipient">Recipient:</label>
+        <input type="text" id="recipient" name="recipient" required>
+        <br>
+        <label for="signature">Signature:</label>
+        <input type="text" id="signature" name="signature">
+        <br>
+        <label for="txt_record">TXT Record:</label>
+        <input type="text" id="txt_record" name="txt_record">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
 </body>
 </html>

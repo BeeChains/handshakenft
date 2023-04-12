@@ -3,6 +3,13 @@ import requests
 
 app = Flask(__name__)
 
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 METADATA_URL = "https://handshakenft/"
 
 def get_nft_metadata(nft_id):
@@ -136,8 +143,4 @@ def handle_dns_request():
         return jsonify({'success': True}), 200
     else:
         return jsonify({'error': 'Failed to add DNS record'}), 400
-    
- @app.route('/')
-def index():
-    return 'Hello, Handshake 🤝!'
    

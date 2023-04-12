@@ -25,7 +25,7 @@ The platform should provide users with easy access to customer support in the ev
 1. Clone the HandshakeNFT Trading App repository from GitHub using the following command:
 ```git clone https://github.com/BeeChains/handshakenft.git```
 2. Navigate to the cloned directory using the following command:
-```cd HandshakeNFT-Trading-App```
+```cd handshakenft```
 3. Create a virtual environment using the following command:
 ```python -m venv env```
 4. Activate the virtual environment using the following command:

@@ -1,5 +1,7 @@
 # handshakenft
 handshakenft/ 
+
+ ⚠ needs more development, start now ⚠
  
 # My Handshake NFT Project Developing 
 
